@@ -25,8 +25,6 @@ app.use('/api/greeting', (request, response) => {
 // set health check
 probe(app);
 
-// TODO: Periodic check for config map update
 
-// TODO: Retrieve ConfigMap
 
 module.exports = app;

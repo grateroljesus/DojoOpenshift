@@ -1,0 +1,11 @@
+{
+"development": 
+	{
+	"database": 
+		{
+		"uri": "mongodb+srv://mongo-dojo:prueba123@cluster0.rkoh4.mongodb.net/sample_training?retryWrites=true&w=majority",
+		"database_name": "sample_training",
+		"collection_name": "companies"
+		}
+	}
+}
