@@ -55,11 +55,39 @@ app.get("/api/companies", (request, response) => {
     });
 });
 
-// set health check
-probe(app);
 
-// TODO: Periodic check for config map update
 
-// TODO: Retrieve ConfigMap
+var healthy = true;
+app.get('/ready', function(req, res) {
+      var now = Math.floor(Date.now() / 1000);
+      var lapsed = now - started;
+      if (lapsed > 30) {
+        console.log('ping /ready => pong [ready]');
+        res.send('Ready for service requests...\n');
+      }
+      else {
+	console.log('ping /ready => pong [notready]');
+	res.status(503);
+        res.send('Error! Service not ready for requests...\n');
+      }
+});
+
+
+app.get('/healthz', function(req, res) {
+    if (healthy) {
+      console.log('ping /healthz => pong [healthy]');
+      res.send('OK\n');
+    }
+    else {
+      console.log('ping /healthz => pong [unhealthy]');
+      res.status(503);
+      res.send('Error!. App not healthy!\n');
+    }
+});
+
+var started = Math.floor(Date.now() / 1000);
+
 
 module.exports = app;
+
+
