@@ -27,7 +27,7 @@ app.use('/api/greeting', (request, response) => {
 var fs = require('fs'),
 configPath = '/opt/app-root/src/configs/config.json';
 var parsed = JSON.parse(fs.readFileSync(configPath, 'UTF-8'));
-exports.storageConfig=  parsed;
+var storageConfig=  parsed;
 
 const {MongoClient} = require('mongodb');
 const uri = storageConfig.development.database.uri;
