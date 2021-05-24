@@ -25,10 +25,15 @@ app.use('/api/greeting', (request, response) => {
 });
 
 
+var fs = require('fs'),
+configPath = '/opt/app-root/src/configs/config.json';
+var parsed = JSON.parse(fs.readFileSync(configPath, 'UTF-8'));
+var storageConfig=  parsed;
+
 const {MongoClient} = require('mongodb');
-const uri = "mongodb+srv://mongo-dojo:prueba123@cluster0.rkoh4.mongodb.net/sample_training?retryWrites=true&w=majority";
-const DATABASE_NAME="sample_training";
-var collection_name = "companies";
+const uri = storageConfig.development.database.uri;
+const DATABASE_NAME=storageConfig.development.database.database_name;
+var collection_name = storageConfig.development.database.collection_name;
 var collection="";
 
 app.listen(5000, () => {
