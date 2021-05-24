@@ -24,6 +24,34 @@ app.use('/api/greeting', (request, response) => {
   return response.send({content: message.replace(/%s/g, name)});
 });
 
+
+const {MongoClient} = require('mongodb');
+const uri = "mongodb+srv://mongo-dojo:prueba123@cluster0.rkoh4.mongodb.net/sample_training?retryWrites=true&w=majority";
+const DATABASE_NAME="sample_training";
+var collection_name = "companies";
+var collection="";
+
+app.listen(5000, () => {
+    MongoClient.connect(uri, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            throw error;
+        }
+        var database = client.db(DATABASE_NAME);
+        collection = database.collection(collection_name);
+        console.log("Connected to `" + DATABASE_NAME + "`!");
+    });
+});
+
+
+app.get("/api/companies", (request, response) => {
+    collection.find({}).toArray((error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result);
+    });
+});
+
 // set health check
 probe(app);
 
