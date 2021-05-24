@@ -15,7 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 let configMap;
-let message = "Default hard-coded greeting: Hello, %s!";
+var hello= process.env.MESSAGE;
+let message = hello+", %s!";
+
 
 app.use('/api/greeting', (request, response) => {
   const name = (request.query && request.query.name) ? request.query.name : 'World';
